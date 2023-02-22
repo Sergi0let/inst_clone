@@ -6,7 +6,7 @@ export default function Post({ username, userImg, img, caption }) {
       {/* Post Header */}
       <div className="flex items-center p-5">
         <img
-          className="h-20 rounded-full object-cover border p-1 mr-3 cursor-pointer"
+          className="h-20 rounded-full object-cover border-2 p-1 mr-3 cursor-pointer"
           src={userImg}
           alt={username}
         />
