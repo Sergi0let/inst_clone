@@ -19,7 +19,7 @@ export default function Header() {
             blurDataURL="https://freelogopng.com/images/all_img/1658587465instagram-name-logo.png"
           />
         </div>
-        <div className="padding-2 cursor-pointer h-24 w-10 relative lg:hidden ">
+        <div className="padding-2 cursor-pointer h-24 w-10 relative lg:hidden min-w-min">
           <Image
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png"
             alt="instagram icon"
