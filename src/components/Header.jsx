@@ -1,12 +1,15 @@
 import Image from 'next/legacy/image';
 import React from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { useRecoilState } from 'recoil';
+import { modalState } from 'atom/modalAtom';
 
 import { SearchIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import { HomeIcon } from '@heroicons/react/solid';
 
 export default function Header() {
   const { data: session } = useSession();
+  const [open, setOpen] = useRecoilState(modalState);
 
   return (
     <div className="shadow-sm border-b sticky top-0 bg-white z-30">
@@ -50,7 +53,10 @@ export default function Header() {
           <HomeIcon className="hidden md:inline-flex h-6 text-black cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" />
           {session ? (
             <>
-              <PlusCircleIcon className=" min-w-[50%] h-6 text-black cursor-pointer hover:scale-125 transition-transform duration-200 ease-out " />
+              <PlusCircleIcon
+                onClick={() => setOpen(true)}
+                className=" min-w-[50%] h-6 text-black cursor-pointer hover:scale-125 transition-transform duration-200 ease-out "
+              />
               <img
                 onClick={signOut}
                 src={session?.user?.image}
