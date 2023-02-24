@@ -25,6 +25,7 @@ export default function Posts() {
             userImg={post.data().profileImg}
             img={post.data().image}
             caption={post.data().caption}
+            id={post.id}
           />
         ))}
     </div>
