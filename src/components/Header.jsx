@@ -7,6 +7,8 @@ import { modalState } from 'atom/modalAtom';
 import { SearchIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import { HomeIcon } from '@heroicons/react/solid';
 
+// Modal.setAppElement(Header);
+
 export default function Header() {
   const { data: session } = useSession();
   const [open, setOpen] = useRecoilState(modalState);

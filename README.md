@@ -1,8 +1,8 @@
-
-
 ### Tech stack:
+
 - Next.js
 - TailwindCss
-- Recoil.js
-- minifaker.js
-- firebase
+- global state: Recoil.js
+- fake data: minifaker.js
+- components lib: react-modal
+- firebase, next-auth
