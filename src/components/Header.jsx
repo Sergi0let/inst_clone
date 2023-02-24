@@ -6,12 +6,12 @@ import { modalState } from 'atom/modalAtom';
 
 import { SearchIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import { HomeIcon } from '@heroicons/react/solid';
-
-// Modal.setAppElement(Header);
+import { useRouter } from 'next/router';
 
 export default function Header() {
   const { data: session } = useSession();
   const [open, setOpen] = useRecoilState(modalState);
+  const router = useRouter();
 
   return (
     <div className="shadow-sm border-b sticky top-0 bg-white z-30">
@@ -23,6 +23,7 @@ export default function Header() {
             alt="instagram logo"
             layout="fill"
             className="object-contain"
+            onClick={() => router.push('/')}
             placeholder="blur"
             blurDataURL="https://freelogopng.com/images/all_img/1658587465instagram-name-logo.png"
           />
@@ -52,7 +53,10 @@ export default function Header() {
 
         {/* right */}
         <div className="flex space-x-4 items-center">
-          <HomeIcon className="hidden md:inline-flex h-6 text-black cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" />
+          <HomeIcon
+            onClick={() => router.push('/')}
+            className="hidden md:inline-flex h-6 text-black cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
+          />
           {session ? (
             <>
               <PlusCircleIcon

@@ -13,7 +13,7 @@ export default function Posts() {
         setPosts(snapshot.docs);
       }
     );
-  }, []);
+  }, [db]);
 
   return (
     <div>
