@@ -20,16 +20,17 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
-import { useSession } from 'next-auth/react';
 import { db } from '/firebase';
 import Moment from 'react-moment';
+import { useRecoilState } from 'recoil';
+import { userAtom } from 'atom/userAtom';
 
 export default function Post({ username, userImg, img, caption, id }) {
-  const { data: session } = useSession();
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
   const [likes, setLikes] = useState([]);
+  const [currentUser, setCurrentUser] = useRecoilState(userAtom);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -53,17 +54,15 @@ export default function Post({ username, userImg, img, caption, id }) {
   }, [db]);
 
   useEffect(() => {
-    setHasLiked(
-      likes.findIndex((like) => like.id === session?.user.uid) !== -1
-    );
-  }, [likes, session?.user.uid]);
+    setHasLiked(likes.findIndex((like) => like.id === currentUser?.uid) !== -1);
+  }, [likes, currentUser?.uid]);
 
   async function likePost() {
     if (hasLiked) {
-      await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid));
+      await deleteDoc(doc(db, 'posts', id, 'likes', currentUser.uid));
     } else {
-      await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
-        username: session.user.username,
+      await setDoc(doc(db, 'posts', id, 'likes', currentUser.uid), {
+        username: currentUser.username,
       });
     }
   }
@@ -75,8 +74,8 @@ export default function Post({ username, userImg, img, caption, id }) {
 
     await addDoc(collection(db, 'posts', id, 'comments'), {
       comment: commentToSend,
-      username: session.user.username,
-      userImage: session.user.image,
+      username: currentUser.username,
+      userImage: currentUser.photo,
       timestamp: serverTimestamp(),
     });
   }
@@ -95,7 +94,7 @@ export default function Post({ username, userImg, img, caption, id }) {
 
       <img src={img} alt={caption} className="object-cover w-full" />
 
-      {session && (
+      {currentUser && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
             {hasLiked ? (
@@ -134,7 +133,7 @@ export default function Post({ username, userImg, img, caption, id }) {
         </div>
       )}
 
-      {session && (
+      {currentUser && (
         <form action="" className="flex items-center p-4 ">
           <EmojiHappyIcon className="h-7" />
           <input

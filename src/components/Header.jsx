@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
-import React, { useState } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+
 import { useRecoilState } from 'recoil';
 import { modalState } from 'atom/modalAtom';
 
@@ -10,21 +10,46 @@ import { HomeIcon } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 
 import alienLogo from '/public/ufo/logoAlien.webp';
+import { db } from '/firebase';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { userAtom } from 'atom/userAtom';
 
 export default function Header() {
-  const { data: session } = useSession();
+  const [openMenu, setOpenMenu] = useState(false);
+  const [currentUser, setCurrentUser] = useRecoilState(userAtom);
   const [open, setOpen] = useRecoilState(modalState);
   const router = useRouter();
-  const [openMenu, setOpenMenu] = useState(false);
+  const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const fetchUser = async () => {
+          const docRef = doc(
+            db,
+            'users',
+            user.auth.currentUser.providerData[0].uid
+          );
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setCurrentUser(docSnap.data());
+          }
+        };
+        fetchUser();
+      }
+    });
+  }, []);
 
   let openClass = openMenu ? 'mt-0' : '-mt-80';
 
+  function onSignOut() {
+    signOut(auth);
+    setCurrentUser(null);
+  }
+
   const handleMenu = () => {
     setOpenMenu(!openMenu);
-  };
-
-  const handleClose = () => {
-    setOpenMenu(false);
   };
 
   const iconMenu = openMenu ? (
@@ -99,21 +124,35 @@ export default function Header() {
               onClick={() => router.push('/')}
               className="hidden md:inline-flex h-6 text-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
             />
-            {session ? (
+            {currentUser ? (
               <>
                 <PlusCircleIcon
                   onClick={() => setOpen(true)}
                   className="min-w-[50%] h-6 text-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out "
                 />
                 <img
-                  onClick={signOut}
-                  src={session?.user?.image}
+                  onClick={() => {
+                    router.push('/auth/signin');
+                    onSignOut();
+                  }}
+                  src={
+                    currentUser.photo ||
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVGTtZqerCXyN1RksswcnMPafER22MvDM1R0ddG_NpCvlq_AYBE9FVkyDqsvLaTqGV_Ec&usqp=CAU'
+                  }
                   alt="user-image"
                   className="h-16 w-16 rounded-full border-2 p-1 bg-gradient-to-tl from-indigo-200 to-purple-900 border-white cursor-pointer  "
                 />
               </>
             ) : (
-              <button onClick={signIn}>Sign in</button>
+              <button
+                className="text-white"
+                onClick={() => {
+                  router.push('/auth/signin');
+                  onSignOut();
+                }}
+              >
+                Sign in
+              </button>
             )}
           </div>
         </div>
@@ -136,9 +175,7 @@ export default function Header() {
 
           <div className="border-2 border-gray-200 my-2"></div>
           <li className="pb-4">
-            <button onClick={handleClose} className="font-semibold text-5xl">
-              close menu
-            </button>
+            <button className="font-semibold text-5xl">close menu</button>
           </li>
           <div className="border-2 border-gray-200 my-2"></div>
         </ul>

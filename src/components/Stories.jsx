@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
 import Story from './Story';
-import 'minifaker/locales/en';
 
 import unknown_stranger from '/public/avatars/av-elien-5.png';
 import space_stalker from '/public/avatars/av-elien-3.jpg';
@@ -12,8 +10,6 @@ import poul from '/public/avatars/poul-el.jpg';
 
 export default function Stories() {
   const [storyUsers, setStoryUsers] = useState([]);
-
-  console.log('storyUsers', storyUsers);
 
   const avatars = [
     { id: 1, img: poul, name: 'poul' },
@@ -29,7 +25,7 @@ export default function Stories() {
   }, []);
 
   return (
-    <div className="flex space-x-3 p-6 bg-white mt-8 border-gray-200 border overflow-x-scroll rounded-sm scrollbar-none">
+    <div className="flex space-x-3 p-3 md:p-6 bg-white mt-8 border-gray-200 border overflow-x-scroll rounded-sm scrollbar-none">
       {storyUsers.map((user) => (
         <Story
           key={user.id}
