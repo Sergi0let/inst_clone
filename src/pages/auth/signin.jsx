@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import { getProviders, signIn } from 'next-auth/react';
+import ufoImage from '/public/ufo/ufo2.jpg';
 
 import Header from '@/components/Header';
 
@@ -7,28 +9,28 @@ export default function signin({ providers }) {
     <>
       <Header />
 
-      <div className="flex justify-center space-x-7 mt-20">
-        <img
-          className="hidden object-cover rotate-6 md:inline-flex md:w-48"
-          src="https://vimeo.com/blog/create/wp-content/uploads/sites/7/2021/01/IGPP_DesktopHeroImage-2.png"
-          alt="Instagram"
+      <div className="flex flex-col-reverse justify-center items-center  md:flex-row md:space-x-7  md:mt-20 ">
+        <Image
+          width={150}
+          height={200}
+          className="rounded-lg border-2 border-black mt-4  md:mt-2 md:-rotate-6 md:mt-0"
+          src={ufoImage}
+          alt="UFO"
         />
         <div className="">
           {Object.values(providers).map((provider) => (
             <div key={provider.name} className="flex flex-col items-center">
-              <img
-                className="w-32 object-cover "
-                src="https://avatanplus.com/files/resources/original/59734e47f01dd15d6a69c930.png"
-                alt="instagram"
-              />
-              <p className="text-sm italic my-10">
+              <h2 className="font-black capitalize mt-4 mb-2 text-xl text-slate-800">
+                I want to believe
+              </h2>
+              <p className="text-sm italic my-4">
                 This app is created for learning propuses
               </p>
               <button
                 onClick={() => signIn(provider.id, { callbackUrl: '/' })}
-                className="bg-red-400 rounded-lg p-3 text-white hover:bg-red-500 "
+                className=" bg-slate-800 border-2 border-slate-800 rounded-lg p-3 text-white hover:bg-white hover:text-slate-800 transition duration-300 ease-in-out"
               >
-                Sign In with {provider.name}
+                Inject In with {provider.name}
               </button>
             </div>
           ))}
@@ -44,4 +46,3 @@ export async function getServerSideProps(context) {
     props: { providers },
   };
 }
-// http://localhost:3000/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F&error=OAuthSignin

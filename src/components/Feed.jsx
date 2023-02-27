@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 
 export default function Feed() {
   const { data: session } = useSession();
-  console.log('session', session);
+
   return (
     <main
       className={`grid ${
@@ -16,10 +16,8 @@ export default function Feed() {
       } `}
     >
       <section className="md:col-span-2">
-        {/* Stories */}
         <Stories />
 
-        {/* Posts */}
         <Posts />
       </section>
       <section className="hidden md:inline-grid ">

@@ -1,9 +1,8 @@
+import { useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { modalState } from 'atom/modalAtom';
 import Modal from 'react-modal';
-import { useRef, useState } from 'react';
-
-import { CameraIcon } from '@heroicons/react/outline';
+import { PaperClipIcon } from '@heroicons/react/outline';
 import {
   addDoc,
   collection,
@@ -14,6 +13,7 @@ import {
 import { db, storage } from '../../firebase';
 import { useSession } from 'next-auth/react';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import Image from 'next/image';
 
 export default function UploadModal() {
   const [open, setOpen] = useRecoilState(modalState);
@@ -73,16 +73,18 @@ export default function UploadModal() {
         >
           <div className="flex flex-col justify-center items-center h-[100%]">
             {selectedFile ? (
-              <img
+              <Image
+                width={150}
+                height={150}
                 onClick={() => setSelectedFile(null)}
                 className="w-full max-h-[150px] object-cover cursor-pointer"
                 src={selectedFile}
                 alt="choose image"
               />
             ) : (
-              <CameraIcon
+              <PaperClipIcon
                 onClick={() => filePickerRef.current.click()}
-                className="cursor-pointer h-14 bg-red-200 p-2 rounded-full text-red-500 "
+                className="cursor-pointer h-14 bg-slate-800 p-2 rounded-full text-white "
               />
             )}
 
@@ -102,7 +104,7 @@ export default function UploadModal() {
             <button
               disabled={!selectedFile || loading}
               onClick={uploadPost}
-              className="w-full bg-red-600 text-white p-2 shadow-md hover:brightness-125 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:hover:brightness-100"
+              className="bg-slate-800 text-white rounded-lg py-2 px-8 shadow-lg hover:text-slate-800 hover:bg-gray-300 font-bold disabled:bg-gray-200 disabled:cursor-not-allowed disabled:hover:brightness-100 transition-all duration-200 ease-in-out"
             >
               Upload Post
             </button>
