@@ -20,7 +20,7 @@ export default function MiniProfile() {
         src={currentUser?.photo}
         alt={currentUser?.username}
       />
-      <div className="xl:flex-1 ">
+      <div className="flex-1 ">
         <h2 className="font-bold">{currentUser?.username}</h2>
         <h3 className="text-sm text-gray-400">I want to believe</h3>
       </div>

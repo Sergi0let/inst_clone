@@ -120,10 +120,13 @@ export default function Header() {
           </nav>
 
           <div className="flex space-x-4 items-center ">
-            <HomeIcon
-              onClick={() => router.push('/')}
-              className="hidden md:inline-flex h-6 text-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
-            />
+            <div className="flex h-6 w-6">
+              <HomeIcon
+                onClick={() => router.push('/')}
+                className="text-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
+              />
+            </div>
+
             {currentUser ? (
               <>
                 <PlusCircleIcon

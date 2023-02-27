@@ -81,7 +81,7 @@ export default function Post({ username, userImg, img, caption, id }) {
   }
 
   return (
-    <div className="bg-white my-7 border rounded-md ">
+    <div className="bg-white my-7 border rounded-lg ">
       <div className="flex items-center p-5">
         <img
           className="h-20 rounded-full object-cover border-2 p-1 mr-3 cursor-pointer"
