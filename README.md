@@ -1,6 +1,6 @@
  # InstaAlien Social network.
  ## Link to demonstration [Try](https://inst-clone-plum.vercel.app/) 
- :::image type="icon" source="https://cdn-icons-png.flaticon.com/512/190/190276.png":::
+ :::image type="icon" source="<https://cdn-icons-png.flaticon.com/512/190/190276.png>":::
  
 ## Tech stack:
 - Next.js
