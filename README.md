@@ -1,6 +1,7 @@
- # InstaAlien  **Жирный**
- [Vivaldi logo](https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/press/icons/viv_icon.png)
- [Link](https://inst-clone-plum.vercel.app/)
+ # InstaAlien Social network.
+ [You can Try](https://inst-clone-plum.vercel.app/)[Vivaldi logo](https://m.media-amazon.com/images/M/MV5BYWM3ODNlNzEtNDllYS00MzEwLWFhNmEtMTY5MmY3YzU1ZTkwXkEyXkFqcGdeQXVyNTg5OTk5ODk@._V1_.jpg)
+ 
+ 
  
 ## Tech stack:
 - Next.js
