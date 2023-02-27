@@ -1,7 +1,5 @@
  # InstaAlien Social network.
- ## Link to demonstration [Try](https://inst-clone-plum.vercel.app/) ![image](![image](https://user-images.githubusercontent.com/88962825/221691540-e71b1ffc-aae9-48df-97a5-61c0183f7e56.png)
-)
-
+ ## Link to demonstration [Try](https://inst-clone-plum.vercel.app/) ![image](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-stickers%2Fufo&psig=AOvVaw1wtg7TyXhYkKPZ5sixGXmc&ust=1677620488360000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCJiMlbzVtv0CFQAAAAAdAAAAABAE)
  
 ## Tech stack:
 - Next.js
