@@ -1,11 +1,11 @@
  # InstaAlien Social network.
  ## Link to demonstration [Try](https://inst-clone-plum.vercel.app/) 
- :::image type="icon" source="<https://cdn-icons-png.flaticon.com/512/190/190276.png>":::
+This application has a Google account authentication. Allows you to post and comment on photos, also allows you to see who is authenticated on this network. This project is made for practice and fun. Firestore technology is used for the database, styles are written by the tailwindcss framework, and all this is on next.js
  
 ## Tech stack:
 - Next.js
-- TailwindCss
+- Tailwindсss
 - global state: Recoil.js
-- fake data: minifaker.js
 - components lib: react-modal
-- firebase, next-auth
+- Firebase
+
