@@ -28,7 +28,7 @@ export default function Signin() {
           photo: user.photoURL,
           uid: user.uid,
           timestamp: serverTimestamp(),
-          username: user.displayName.split(' ').join('__'),
+          username: user.displayName.split(' ').join('_').toLocaleLowerCase(),
         });
       }
 
