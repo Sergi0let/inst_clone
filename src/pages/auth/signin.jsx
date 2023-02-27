@@ -1,47 +1,71 @@
-import { getProviders, signIn } from 'next-auth/react';
-
+import Image from 'next/image';
 import Header from '@/components/Header';
+import ufoImage from '/public/ufo/ufo2.jpg';
 
-export default function signin({ providers }) {
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { db } from '/firebase';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { useRouter } from 'next/router';
+
+export default function Signin() {
+  const router = useRouter();
+
+  async function onGoogleClick() {
+    try {
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
+
+      await signInWithPopup(auth, provider);
+
+      const user = auth.currentUser.providerData[0];
+      const docRef = doc(db, 'users', user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        await setDoc(docRef, {
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+          uid: user.uid,
+          timestamp: serverTimestamp(),
+          username: user.displayName.split(' ').join('__'),
+        });
+      }
+
+      router.push('/');
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
   return (
     <>
       <Header />
 
-      <div className="flex justify-center space-x-7 mt-20">
-        <img
-          className="hidden object-cover rotate-6 md:inline-flex md:w-48"
-          src="https://vimeo.com/blog/create/wp-content/uploads/sites/7/2021/01/IGPP_DesktopHeroImage-2.png"
-          alt="Instagram"
+      <div className="flex flex-col-reverse justify-center items-center  md:flex-row md:space-x-7  md:mt-20 ">
+        <Image
+          width={150}
+          height={200}
+          className="rounded-lg border-2 border-black mt-4  md:mt-2 md:-rotate-6"
+          src={ufoImage}
+          alt="UFO"
         />
         <div className="">
-          {Object.values(providers).map((provider) => (
-            <div key={provider.name} className="flex flex-col items-center">
-              <img
-                className="w-32 object-cover "
-                src="https://avatanplus.com/files/resources/original/59734e47f01dd15d6a69c930.png"
-                alt="instagram"
-              />
-              <p className="text-sm italic my-10">
-                This app is created for learning propuses
-              </p>
-              <button
-                onClick={() => signIn(provider.id, { callbackUrl: '/' })}
-                className="bg-red-400 rounded-lg p-3 text-white hover:bg-red-500 "
-              >
-                Sign In with {provider.name}
-              </button>
-            </div>
-          ))}
+          <div className="flex flex-col items-center">
+            <h2 className="font-black capitalize mt-4 mb-2 text-xl text-slate-800">
+              I want to believe
+            </h2>
+            <p className="text-sm italic my-4">
+              This app is created for learning propuses
+            </p>
+            <button
+              onClick={onGoogleClick}
+              className=" bg-slate-800 border-2 border-slate-800 rounded-lg p-3 text-white hover:bg-white hover:text-slate-800 transition duration-300 ease-in-out"
+            >
+              Inject In with Google
+            </button>
+          </div>
         </div>
       </div>
     </>
   );
 }
-
-export async function getServerSideProps(context) {
-  const providers = await getProviders();
-  return {
-    props: { providers },
-  };
-}
-// http://localhost:3000/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F&error=OAuthSignin

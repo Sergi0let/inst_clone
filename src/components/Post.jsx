@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import {
   DotsHorizontalIcon,
@@ -19,16 +20,17 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
-import { useSession } from 'next-auth/react';
 import { db } from '/firebase';
 import Moment from 'react-moment';
+import { useRecoilState } from 'recoil';
+import { userAtom } from 'atom/userAtom';
 
 export default function Post({ username, userImg, img, caption, id }) {
-  const { data: session } = useSession();
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
   const [likes, setLikes] = useState([]);
+  const [currentUser, setCurrentUser] = useRecoilState(userAtom);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -52,17 +54,15 @@ export default function Post({ username, userImg, img, caption, id }) {
   }, [db]);
 
   useEffect(() => {
-    setHasLiked(
-      likes.findIndex((like) => like.id === session?.user.uid) !== -1
-    );
-  }, [likes, session?.user.uid]);
+    setHasLiked(likes.findIndex((like) => like.id === currentUser?.uid) !== -1);
+  }, [likes, currentUser?.uid]);
 
   async function likePost() {
     if (hasLiked) {
-      await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid));
+      await deleteDoc(doc(db, 'posts', id, 'likes', currentUser.uid));
     } else {
-      await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
-        username: session.user.username,
+      await setDoc(doc(db, 'posts', id, 'likes', currentUser.uid), {
+        username: currentUser.username,
       });
     }
   }
@@ -74,15 +74,14 @@ export default function Post({ username, userImg, img, caption, id }) {
 
     await addDoc(collection(db, 'posts', id, 'comments'), {
       comment: commentToSend,
-      username: session.user.username,
-      userImage: session.user.image,
+      username: currentUser.username,
+      userImage: currentUser.photo,
       timestamp: serverTimestamp(),
     });
   }
 
   return (
-    <div className="bg-white my-7 border rounded-md ">
-      {/* Post Header */}
+    <div className="bg-white my-7 border rounded-lg ">
       <div className="flex items-center p-5">
         <img
           className="h-20 rounded-full object-cover border-2 p-1 mr-3 cursor-pointer"
@@ -92,10 +91,10 @@ export default function Post({ username, userImg, img, caption, id }) {
         <p className="font-bold flex-1">{username}</p>
         <DotsHorizontalIcon className="h-5" />
       </div>
-      {/* Post Image */}
+
       <img src={img} alt={caption} className="object-cover w-full" />
-      {/* Post buttons */}
-      {session && (
+
+      {currentUser && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
             {hasLiked ? (
@@ -112,13 +111,13 @@ export default function Post({ username, userImg, img, caption, id }) {
           <BookmarkIcon className="btn" />
         </div>
       )}
-      {/* Post Coments */}
+
       <p className="p-5 truncate">
         <span className="font-bold mr-2">{username}</span>
         {caption}
       </p>
       {comments.length > 0 && (
-        <div className="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
+        <div className="mx-10 max-h-40 overflow-y-scroll scrollbar-none">
           {comments.map((comment, id) => (
             <div key={id} className="flex items-center space-x-2 mb-2">
               <img
@@ -134,8 +133,7 @@ export default function Post({ username, userImg, img, caption, id }) {
         </div>
       )}
 
-      {/*Post Inputbox*/}
-      {session && (
+      {currentUser && (
         <form action="" className="flex items-center p-4 ">
           <EmojiHappyIcon className="h-7" />
           <input
