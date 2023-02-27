@@ -1,5 +1,6 @@
  # InstaAlien Social network.
- ## Link to demonstration [Try](https://inst-clone-plum.vercel.app/) ![image](https://ps.w.org/social-share-buttons-lite/assets/icon-256x256.png?rev=1933553)
+ ## Link to demonstration [Try](https://inst-clone-plum.vercel.app/) ![image](![image](https://user-images.githubusercontent.com/88962825/221691540-e71b1ffc-aae9-48df-97a5-61c0183f7e56.png)
+)
 
  
 ## Tech stack:
