@@ -6,7 +6,7 @@ export default function Story({ img, username, user, id, isUser, ...props }) {
       <Image
         width={60}
         height={60}
-        className="h-14 rounded-full p-[1.5px] border-indigo-800 border-2 cursor-pointer group-hover:scale-110 transition transform duration-200 ease-out"
+        className="h-16 w-16 rounded-full p-[1.5px] border-slate-800 border-2 cursor-pointer group-hover:scale-110 transition transform duration-200 ease-out"
         src={img.src}
         alt={username}
       />

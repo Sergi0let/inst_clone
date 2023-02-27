@@ -14,6 +14,7 @@ import { db } from '/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { userAtom } from 'atom/userAtom';
+import Link from 'next/link';
 
 export default function Header() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -50,6 +51,10 @@ export default function Header() {
 
   const handleMenu = () => {
     setOpenMenu(!openMenu);
+  };
+
+  const handleCloseMenu = () => {
+    setOpenMenu(false);
   };
 
   const iconMenu = openMenu ? (
@@ -106,15 +111,15 @@ export default function Header() {
           <nav className="hidden md:block md:flex-1">
             <ul className="flex gap-4 text-white -mb-2">
               <li className="menuItem">
-                <a href="" className="">
+                <Link href="/about" className="">
                   About
-                </a>
+                </Link>
               </li>
               <li className="menuItem">
-                <a href="">Contact</a>
+                <Link href="/contact">Contact</Link>
               </li>
               <li className="menuItem">
-                <a href="">Home</a>
+                <Link href="/">Home</Link>
               </li>
             </ul>
           </nav>
@@ -165,20 +170,25 @@ export default function Header() {
         <ul className="pt-10 px-4">
           <div className="border-2 border-gray-200 my-2"></div>
           <li className="pb-4">
-            <a href="" className="font-semibold text-5xl ">
+            <Link href="/about" className="font-semibold text-5xl ">
               about
-            </a>
+            </Link>
           </li>
           <div className="border-2 border-gray-200 my-2"></div>
           <li className="pb-4">
-            <a href="" className="font-semibold text-5xl">
+            <Link href="/contact" className="font-semibold text-5xl">
               contacts
-            </a>
+            </Link>
           </li>
 
           <div className="border-2 border-gray-200 my-2"></div>
           <li className="pb-4">
-            <button className="font-semibold text-5xl">close menu</button>
+            <button
+              onClick={handleCloseMenu}
+              className="font-semibold text-5xl"
+            >
+              close menu
+            </button>
           </li>
           <div className="border-2 border-gray-200 my-2"></div>
         </ul>
