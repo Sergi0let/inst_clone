@@ -1,7 +1,5 @@
  # InstaAlien Social network.
- [You can Try](https://inst-clone-plum.vercel.app/) https://icons8.com/icon/9fp9k4lPT8us/check-mark-button
- 
- ![image](https://user-images.githubusercontent.com/88962825/221690814-015e230d-64fe-40da-afce-bb6601ed8669.png)
+ ## Link to demonstration [Try](https://inst-clone-plum.vercel.app/) ![image](https://user-images.githubusercontent.com/88962825/221690814-015e230d-64fe-40da-afce-bb6601ed8669.png)
 
  
 ## Tech stack:
