@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Story from './Story';
+import Story from '@/common/Story';
 
 import { avatars } from '@/store';
 
